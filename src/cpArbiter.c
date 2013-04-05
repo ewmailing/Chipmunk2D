@@ -29,6 +29,10 @@ cpContactInit(cpContact *con, cpVect p, cpVect n, cpFloat dist, cpHashValue hash
 	con->n = n;
 	con->dist = dist;
 	
+	con->e = 0.0f;
+	con->u = 0.0f;
+	con->surface_vr = cpvzero;
+	
 	con->jnAcc = 0.0f;
 	con->jtAcc = 0.0f;
 	con->jBias = 0.0f;
@@ -163,7 +167,6 @@ cpArbiterTotalImpulseWithFriction(const cpArbiter *arb)
 cpFloat
 cpArbiterTotalKE(const cpArbiter *arb)
 {
-	cpFloat eCoef = (1 - arb->e)/(1 + arb->e);
 	cpFloat sum = 0.0;
 	
 	cpContact *contacts = arb->contacts;
@@ -172,6 +175,7 @@ cpArbiterTotalKE(const cpArbiter *arb)
 		cpFloat jnAcc = con->jnAcc;
 		cpFloat jtAcc = con->jtAcc;
 		
+		cpFloat eCoef = (1 - con->e)/(1 + con->e);
 		sum += eCoef*jnAcc*jnAcc/con->nMass + jtAcc*jtAcc/con->tMass;
 	}
 	
@@ -208,10 +212,6 @@ cpArbiterInit(cpArbiter *arb, cpShape *a, cpShape *b)
 	arb->handler = NULL;
 	arb->swappedColl = cpFalse;
 	
-	arb->e = 0.0f;
-	arb->u = 0.0f;
-	arb->surface_vr = cpvzero;
-	
 	arb->numContacts = 0;
 	arb->contacts = NULL;
 	
@@ -235,20 +235,24 @@ void
 cpArbiterUpdate(cpArbiter *arb, cpContact *contacts, int numContacts, cpCollisionHandler *handler, cpShape *a, cpShape *b)
 {
 	// Arbiters without contact data may exist if a collision function rejected the collision.
-	if(arb->numContacts > 0){
-		// Iterate over the possible pairs to look for hash value matches.
-		for(int i=0; i<arb->numContacts; i++){
-			cpContact *old = &arb->contacts[i];
+	for(int i=0; i<numContacts; i++){
+		cpContact *con = contacts + i;
+		
+		con->e = a->e*b->e;
+		con->u = a->u*b->u;
+		
+		// TODO is this backwards? WTF!
+		cpVect vr = cpvsub(a->surface_v, b->surface_v);
+		con->surface_vr = cpvsub(vr, cpvmult(con->n, cpvdot(vr, con->n)));
+		
+		for(int j=0; j<arb->numContacts; j++){
+			cpContact *old = arb->contacts + j;
 			
-			for(int j=0; j<numContacts; j++){
-				cpContact *new_contact = &contacts[j];
-				
-				// This could trigger false positives, but is fairly unlikely nor serious if it does.
-				if(new_contact->hash == old->hash){
-					// Copy the persistant contact information.
-					new_contact->jnAcc = old->jnAcc;
-					new_contact->jtAcc = old->jtAcc;
-				}
+			// This *could* trigger false positives, but is fairly unlikely nor serious if it does.
+			if(con->hash == old->hash){
+				// Copy the persistant contact information.
+				con->jnAcc = old->jnAcc;
+				con->jtAcc = old->jtAcc;
 			}
 		}
 	}
@@ -258,10 +262,6 @@ cpArbiterUpdate(cpArbiter *arb, cpContact *contacts, int numContacts, cpCollisio
 	
 	arb->handler = handler;
 	arb->swappedColl = (a->collision_type != handler->a);
-	
-	arb->e = a->e * b->e;
-	arb->u = a->u * b->u;
-	arb->surface_vr = cpvsub(a->surface_v, b->surface_v);
 	
 	// For collisions between two similar primitive types, the order could have been swapped.
 	arb->a = a; arb->body_a = a->body;
@@ -293,7 +293,8 @@ cpArbiterPreStep(cpArbiter *arb, cpFloat dt, cpFloat slop, cpFloat bias)
 		con->jBias = 0.0f;
 		
 		// Calculate the target bounce velocity.
-		con->bounce = normal_relative_velocity(a, b, con->r1, con->r2, con->n)*arb->e;
+		// TODO should include surface_vr?
+		con->bounce = normal_relative_velocity(a, b, con->r1, con->r2, con->n)*con->e;
 	}
 }
 
@@ -319,8 +320,6 @@ cpArbiterApplyImpulse(cpArbiter *arb)
 {
 	cpBody *a = arb->body_a;
 	cpBody *b = arb->body_b;
-	cpVect surface_vr = arb->surface_vr;
-	cpFloat friction = arb->u;
 
 	for(int i=0; i<arb->numContacts; i++){
 		cpContact *con = &arb->contacts[i];
@@ -331,11 +330,11 @@ cpArbiterApplyImpulse(cpArbiter *arb)
 		
 		cpVect vb1 = cpvadd(a->v_bias, cpvmult(cpvperp(r1), a->w_bias));
 		cpVect vb2 = cpvadd(b->v_bias, cpvmult(cpvperp(r2), b->w_bias));
-		cpVect vr = relative_velocity(a, b, r1, r2);
+		cpVect vr = cpvadd(relative_velocity(a, b, r1, r2), con->surface_vr);
 		
 		cpFloat vbn = cpvdot(cpvsub(vb2, vb1), n);
 		cpFloat vrn = cpvdot(vr, n);
-		cpFloat vrt = cpvdot(cpvadd(vr, surface_vr), cpvperp(n));
+		cpFloat vrt = cpvdot(vr, cpvperp(n));
 		
 		cpFloat jbn = (con->bias - vbn)*nMass;
 		cpFloat jbnOld = con->jBias;
@@ -345,7 +344,7 @@ cpArbiterApplyImpulse(cpArbiter *arb)
 		cpFloat jnOld = con->jnAcc;
 		con->jnAcc = cpfmax(jnOld + jn, 0.0f);
 		
-		cpFloat jtMax = friction*con->jnAcc;
+		cpFloat jtMax = con->u*con->jnAcc;
 		cpFloat jt = -vrt*con->tMass;
 		cpFloat jtOld = con->jtAcc;
 		con->jtAcc = cpfclamp(jtOld + jt, -jtMax, jtMax);

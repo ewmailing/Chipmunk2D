@@ -231,6 +231,9 @@ struct cpContact {
 	cpVect p, n;
 	cpFloat dist;
 	
+	cpFloat e, u;
+	cpVect surface_vr;
+	
 	cpVect r1, r2;
 	cpFloat nMass, tMass, bounce;
 
