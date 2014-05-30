@@ -32,6 +32,14 @@ else()
   option(INSTALL_STATIC "Install the static library" ON)
 endif()
 
+# RPATH $ORIGIN is only for Linux and Solaris
+# FIXME: match for Solaris too
+if("${CMAKE_SYSTEM}" MATCHES "Linux" AND NOT ANDROID)
+  # RPATH $ORIGIN is a technique for bundling dynamic libraries with executables.
+  # This is useful for shipping games that don't require root access to install to system areas.
+  option(USE_RPATH_ORIGIN "Use RPATH $ORIGIN for shared libraries" OFF)
+endif()
+
 if(CMAKE_C_COMPILER_ID STREQUAL "Clang")
   option(FORCE_CLANG_BLOCKS "Force enable Clang blocks" YES)
 endif()
