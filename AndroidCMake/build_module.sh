@@ -28,7 +28,7 @@ mkdir -p buildandroidcmake
 #unset ANDROID_NDK
 
 # The STLPort flag is not required for C code like Chipmunk. But don't forget it for C++ code.
-./AndroidCMake/gen_cmakeandroid.pl --sourcedir=. --targetdir=buildandroidcmake --toolchain=AndroidCMake/android.toolchain.cmake --standalone=$LATEST_ANDROID_NDK_ROOT/standalone/ --buildtype=MinSizeRel --no-build
+./AndroidCMake/gen_cmakeandroid.pl --sourcedir=. --targetdir=buildandroidcmake --toolchain=AndroidCMake/android.toolchain.cmake --standalone=$LATEST_ANDROID_NDK_ROOT/standalone/ --buildtype=Release --no-build
 ./AndroidCMake/make_cmakeandroid.pl --targetdir=buildandroidcmake -j2
 
 # Module-ify the built libraries to conform to the Android external module system
