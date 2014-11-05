@@ -103,7 +103,13 @@ cpShapeUpdate(cpShape *shape, cpVect pos, cpVect rot)
 
 cpBool
 cpShapePointQuery(cpShape *shape, cpVect p){
-	cpNearestPointQueryInfo info = {NULL, cpvzero, INFINITY, cpvzero};
+//	cpNearestPointQueryInfo info = {NULL, (cpVect)cpvzero, (cpFloat)INFINITY, (cpVect)cpvzero};
+	cpNearestPointQueryInfo info;
+	info.shape = NULL;
+	info.p = cpvzero;
+	info.d = INFINITY;
+	info.g = cpvzero;
+
 	cpShapeNearestPointQuery(shape, p, &info);
 	
 	return (info.d < 0.0f);
@@ -112,7 +118,13 @@ cpShapePointQuery(cpShape *shape, cpVect p){
 cpFloat
 cpShapeNearestPointQuery(cpShape *shape, cpVect p, cpNearestPointQueryInfo *info)
 {
-	cpNearestPointQueryInfo blank = {NULL, cpvzero, INFINITY, cpvzero};
+//	cpNearestPointQueryInfo blank = {NULL, cpvzero, INFINITY, cpvzero};
+	cpNearestPointQueryInfo blank;
+	blank.shape = NULL;
+	blank.p = cpvzero;
+	blank.d = INFINITY;
+	blank.g = cpvzero;
+
 	if(info){
 		(*info) = blank;
 	} else {
@@ -126,8 +138,12 @@ cpShapeNearestPointQuery(cpShape *shape, cpVect p, cpNearestPointQueryInfo *info
 
 cpBool
 cpShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info){
-	cpSegmentQueryInfo blank = {NULL, 1.0f, cpvzero};
-	if(info){
+//	cpSegmentQueryInfo blank = {NULL, 1.0f, cpvzero};
+	cpSegmentQueryInfo blank;
+	blank.shape = NULL;
+	blank.t = 1.0f;
+	blank.n = cpvzero;
+	if (info){
 		(*info) = blank;
 	} else {
 		info = &blank;
@@ -287,8 +303,22 @@ cpSegmentShapeSegmentQuery(cpSegmentShape *seg, cpVect a, cpVect b, cpSegmentQue
 			info->n = flipped_n;
 		}
 	} else if(r != 0.0f){
-		cpSegmentQueryInfo info1 = {NULL, 1.0f, cpvzero};
-		cpSegmentQueryInfo info2 = {NULL, 1.0f, cpvzero};
+//		cpSegmentQueryInfo info1 = {NULL, 1.0f, cpvzero};
+//		cpSegmentQueryInfo info2 = {NULL, 1.0f, cpvzero};
+	
+		cpSegmentQueryInfo info1;
+		cpSegmentQueryInfo info2;
+
+		info1.shape = NULL;
+		info1.t = 1.0f;
+		info1.n = cpvzero;
+
+
+		info2.shape = NULL;
+		info2.t = 1.0f;
+		info2.n = cpvzero;
+
+
 		CircleSegmentQuery((cpShape *)seg, seg->ta, seg->r, a, b, &info1);
 		CircleSegmentQuery((cpShape *)seg, seg->tb, seg->r, a, b, &info2);
 		

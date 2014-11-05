@@ -151,7 +151,10 @@ static inline cpSplittingPlane
 cpSplittingPlaneNew(cpVect a, cpVect b)
 {
 	cpVect n = cpvnormalize(cpvperp(cpvsub(b, a)));
-	cpSplittingPlane plane = {n, cpvdot(n, a)};
+//	cpSplittingPlane plane = {n, cpvdot(n, a)};
+	cpSplittingPlane plane;
+	plane.n = n;
+	plane.d = cpvdot(n, a);
 	return plane;
 }
 

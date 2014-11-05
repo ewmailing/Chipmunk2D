@@ -3,6 +3,10 @@ file(GLOB chipmunk_public_header "${chipmunk_SOURCE_DIR}/include/chipmunk/*.h")
 file(GLOB chipmunk_constraint_header "${chipmunk_SOURCE_DIR}/include/chipmunk/constraints/*.h")
 
 include_directories(${chipmunk_SOURCE_DIR}/include/chipmunk)
+if(MSVC)
+	list(APPEND chipmunk_source_files ${CMAKE_SOURCE_DIR}/msvc/vc12/chipmunk/chipmunk.def)
+	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+endif(MSVC)  
 
 if(BUILD_SHARED)
   add_library(chipmunk SHARED
@@ -10,8 +14,8 @@ if(BUILD_SHARED)
   )
   # Tell MSVC to compile the code as C++.
   if(MSVC)
-    set_source_files_properties(${chipmunk_source_files} PROPERTIES LANGUAGE CXX)
-    set_target_properties(chipmunk PROPERTIES LINKER_LANGUAGE CXX)
+#    set_source_files_properties(${chipmunk_source_files} PROPERTIES LANGUAGE CXX)
+#    set_target_properties(chipmunk PROPERTIES LINKER_LANGUAGE CXX)
   endif(MSVC)
   # set the lib's version number
   # But avoid on Android because symlinks to version numbered .so's don't work with Android's Java-side loadLibrary.
@@ -31,8 +35,8 @@ if(BUILD_STATIC)
   )
   # Tell MSVC to compile the code as C++.
   if(MSVC)
-    set_source_files_properties(${chipmunk_source_files} PROPERTIES LANGUAGE CXX)
-    set_target_properties(chipmunk_static PROPERTIES LINKER_LANGUAGE CXX)
+  #  set_source_files_properties(${chipmunk_source_files} PROPERTIES LANGUAGE CXX)
+  #  set_target_properties(chipmunk_static PROPERTIES LINKER_LANGUAGE CXX)
   endif(MSVC)
   # Sets chipmunk_static to output "libchipmunk.a" not "libchipmunk_static.a"
   set_target_properties(chipmunk_static PROPERTIES OUTPUT_NAME chipmunk)
