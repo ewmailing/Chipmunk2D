@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		007D4701192F587E00421970 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 007D46FF192F587E00421970 /* InfoPlist.strings */; };
 		007D470C192F587F00421970 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 007D470B192F587F00421970 /* XCTest.framework */; };
 		007D470D192F587F00421970 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 007D46F6192F587E00421970 /* Cocoa.framework */; };
 		007D4710192F587F00421970 /* chipmunk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 007D46F4192F587E00421970 /* chipmunk.framework */; };
@@ -229,7 +228,6 @@
 		007D46FA192F587E00421970 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		007D46FB192F587E00421970 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		007D46FE192F587E00421970 /* chipmunk-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "chipmunk-Info.plist"; sourceTree = "<group>"; };
-		007D4700192F587E00421970 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		007D470A192F587E00421970 /* chipmunkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chipmunkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		007D470B192F587F00421970 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		007D4713192F587F00421970 /* chipmunkTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "chipmunkTests-Info.plist"; sourceTree = "<group>"; };
@@ -419,7 +417,6 @@
 			isa = PBXGroup;
 			children = (
 				007D46FE192F587E00421970 /* chipmunk-Info.plist */,
-				007D46FF192F587E00421970 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -873,7 +870,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				007D4701192F587E00421970 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1064,14 +1060,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		007D46FF192F587E00421970 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				007D4700192F587E00421970 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		007D4714192F587F00421970 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1119,7 +1107,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "chipmunk/chipmunk-Info.plist";
+				INFOPLIST_FILE = "chipmunk-Info.plist";
 				INSTALL_PATH = "@rpath";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1160,7 +1148,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "chipmunk/chipmunk-Info.plist";
+				INFOPLIST_FILE = "chipmunk-Info.plist";
 				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1361,7 +1349,6 @@
 					"-Wall",
 					"-W",
 					"-Wno-unused-parameter",
-					"-Werror",
 					"-Wnewline-eof",
 				);
 			};
@@ -1385,7 +1372,6 @@
 					"-Wall",
 					"-W",
 					"-Wno-unused-parameter",
-					"-Werror",
 					"-Wnewline-eof",
 				);
 			};
@@ -1477,6 +1463,7 @@
 				007D471B192F587F00421970 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		007D471C192F587F00421970 /* Build configuration list for PBXNativeTarget "chipmunkTests" */ = {
 			isa = XCConfigurationList;
@@ -1485,6 +1472,7 @@
 				007D471E192F587F00421970 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D34963BE0B56CACA00CAD239 /* Build configuration list for PBXNativeTarget "ChipmunkStatic" */ = {
 			isa = XCConfigurationList;
