@@ -59,7 +59,10 @@ BBToBounds(cpSweep1D *sweep, cpBB bb)
 static inline TableCell
 MakeTableCell(cpSweep1D *sweep, void *obj)
 {
-	TableCell cell = {obj, BBToBounds(sweep, sweep->spatialIndex.bbfunc(obj))};
+//	TableCell cell = {obj, BBToBounds(sweep, sweep->spatialIndex.bbfunc(obj))};
+	TableCell cell;
+	cell.obj = NULL;
+	cell.bounds = BBToBounds(sweep, sweep->spatialIndex.bbfunc(obj));
 	return cell;
 }
 

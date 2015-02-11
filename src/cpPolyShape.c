@@ -153,7 +153,12 @@ cpPolyShapeSegmentQuery(cpPolyShape *poly, cpVect a, cpVect b, cpSegmentQueryInf
 	// Also check against the beveled vertexes.
 	if(r > 0.0f){
 		for(int i=0; i<numVerts; i++){
-			cpSegmentQueryInfo circle_info = {NULL, 1.0f, cpvzero};
+//			cpSegmentQueryInfo circle_info = { NULL, 1.0f, (cpVect)cpvzero };
+			cpSegmentQueryInfo circle_info;
+			circle_info.shape = NULL;
+			circle_info.t = 1.0f;
+			circle_info.n = cpvzero;
+
 			CircleSegmentQuery(&poly->shape, verts[i], r, a, b, &circle_info);
 			if(circle_info.t < info->t) (*info) = circle_info;
 		}
@@ -283,13 +288,20 @@ cpBoxShapeInit2(cpPolyShape *poly, cpBody *body, cpBB box)
 cpPolyShape *
 cpBoxShapeInit3(cpPolyShape *poly, cpBody *body, cpBB box, cpFloat radius)
 {
+	/*
 	cpVect verts[] = {
 		cpv(box.l, box.b),
 		cpv(box.l, box.t),
 		cpv(box.r, box.t),
 		cpv(box.r, box.b),
 	};
-	
+	*/
+	cpVect verts[4];
+	verts[0] = cpv(box.l, box.b);
+	verts[1] = cpv(box.l, box.t);
+	verts[2] = cpv(box.r, box.t);
+	verts[3] = cpv(box.r, box.b);
+
 	return cpPolyShapeInit2(poly, body, 4, verts, cpvzero, radius);
 }
 

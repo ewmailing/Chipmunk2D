@@ -91,7 +91,10 @@ struct SupportPoint {
 static inline struct SupportPoint
 SupportPointNew(cpVect p, cpCollisionID id)
 {
-	struct SupportPoint point = {p, id};
+//	struct SupportPoint point = {p, id};
+	struct SupportPoint point;
+	point.p = p;
+	point.id = id;
 	return point;
 }
 
@@ -130,7 +133,13 @@ struct MinkowskiPoint {
 static inline struct MinkowskiPoint
 MinkowskiPointNew(const struct SupportPoint a, const struct SupportPoint b)
 {
-	struct MinkowskiPoint point = {a.p, b.p, cpvsub(b.p, a.p), (a.id & 0xFF)<<8 | (b.id & 0xFF)};
+//	struct MinkowskiPoint point = {a.p, b.p, (cpVect)cpvsub(b.p, a.p), (a.id & 0xFF)<<8 | (b.id & 0xFF)};
+	struct MinkowskiPoint point;
+	point.a = a.p;
+	point.b = b.p;
+	point.ab = cpvsub(b.p, a.p);
+	point.id = (a.id & 0xFF) << 8 | (b.id & 0xFF);
+
 	return point;
 }
 
@@ -161,7 +170,20 @@ struct Edge {
 static inline struct Edge
 EdgeNew(cpVect va, cpVect vb, cpHashValue ha, cpHashValue hb, cpFloat r)
 {
-	struct Edge edge = {{va, ha}, {vb, hb}, r, cpvnormalize(cpvperp(cpvsub(vb, va)))};
+//	struct Edge edge = {{va, ha}, {vb, hb}, r, cpvnormalize(cpvperp(cpvsub(vb, va)))};
+	struct Edge edge;
+	struct EdgePoint edge_point;
+	edge_point.p = va;
+	edge_point.hash = ha;
+	edge.a = edge_point;
+
+	edge_point.p = vb;
+	edge_point.hash = hb;
+	edge.b = edge_point;
+
+	edge.r = r;
+	edge.n = cpvnormalize(cpvperp(cpvsub(vb, va)));
+
 	return edge;
 }
 
@@ -177,10 +199,36 @@ SupportEdgeForPoly(const cpPolyShape *poly, const cpVect n)
 	
 	cpVect *verts = poly->tVerts;
 	if(cpvdot(n, poly->tPlanes[i1].n) > cpvdot(n, poly->tPlanes[i2].n)){
-		struct Edge edge = {{verts[i0], CP_HASH_PAIR(poly, i0)}, {verts[i1], CP_HASH_PAIR(poly, i1)}, poly->r, poly->tPlanes[i1].n};
+//		struct Edge edge = {{verts[i0], CP_HASH_PAIR(poly, i0)}, {verts[i1], CP_HASH_PAIR(poly, i1)}, poly->r, poly->tPlanes[i1].n};
+		struct Edge edge;
+		struct EdgePoint edge_point;
+		edge_point.p = verts[i0];
+		edge_point.hash = CP_HASH_PAIR(poly, i0);
+		edge.a = edge_point;
+
+		edge_point.p = verts[i1];
+		edge_point.hash = CP_HASH_PAIR(poly, i1);
+		edge.b = edge_point;
+		
+		edge.r = poly->r;
+		edge.n = poly->tPlanes[i1].n;
 		return edge;
 	} else {
-		struct Edge edge = {{verts[i1], CP_HASH_PAIR(poly, i1)}, {verts[i2], CP_HASH_PAIR(poly, i2)}, poly->r, poly->tPlanes[i2].n};
+//		struct Edge edge = {{verts[i1], CP_HASH_PAIR(poly, i1)}, {verts[i2], CP_HASH_PAIR(poly, i2)}, poly->r, poly->tPlanes[i2].n};
+		struct Edge edge;
+		struct EdgePoint edge_point;
+		edge_point.p = verts[i1];
+		edge_point.hash = CP_HASH_PAIR(poly, i1);
+		edge.a = edge_point;
+
+		edge_point.p = verts[i2];
+		edge_point.hash = CP_HASH_PAIR(poly, i2);
+		edge.b = edge_point;
+
+		edge.r = poly->r;
+		edge.n = poly->tPlanes[i2].n;
+		return edge;
+
 		return edge;
 	}
 }
@@ -189,10 +237,35 @@ static struct Edge
 SupportEdgeForSegment(const cpSegmentShape *seg, const cpVect n)
 {
 	if(cpvdot(seg->tn, n) > 0.0){
-		struct Edge edge = {{seg->ta, CP_HASH_PAIR(seg, 0)}, {seg->tb, CP_HASH_PAIR(seg, 1)}, seg->r, seg->tn};
+//		struct Edge edge = {{seg->ta, CP_HASH_PAIR(seg, 0)}, {seg->tb, CP_HASH_PAIR(seg, 1)}, seg->r, seg->tn};
+		struct Edge edge;
+		struct EdgePoint edge_point;
+		edge_point.p = seg->ta;
+		edge_point.hash = CP_HASH_PAIR(seg, 0);
+		edge.a = edge_point;
+
+		edge_point.p = seg->tb;
+		edge_point.hash = CP_HASH_PAIR(seg, 1);
+		edge.b = edge_point;
+
+		edge.r = seg->r;
+		edge.n = seg->tn;
+
 		return edge;
 	} else {
-		struct Edge edge = {{seg->tb, CP_HASH_PAIR(seg, 1)}, {seg->ta, CP_HASH_PAIR(seg, 0)}, seg->r, cpvneg(seg->tn)};
+//		struct Edge edge = {{seg->tb, CP_HASH_PAIR(seg, 1)}, {seg->ta, CP_HASH_PAIR(seg, 0)}, seg->r, cpvneg(seg->tn)};
+		struct Edge edge;
+		struct EdgePoint edge_point;
+		edge_point.p = seg->tb;
+		edge_point.hash = CP_HASH_PAIR(seg, 1);
+		edge.a = edge_point;
+
+		edge_point.p = seg->ta;
+		edge_point.hash = CP_HASH_PAIR(seg, 0);
+		edge.b = edge_point;
+
+		edge.r = seg->r;
+		edge.n = cpvneg(seg->tn);
 		return edge;
 	}
 }
@@ -233,13 +306,27 @@ ClosestPointsNew(const struct MinkowskiPoint v0, const struct MinkowskiPoint v1)
 	cpFloat d = -cpvdot(n, p);
 	
 	if(d <= 0.0f || (0.0f < t && t < 1.0f)){
-		struct ClosestPoints points = {pa, pb, cpvneg(n), d, id};
+//		struct ClosestPoints points = {pa, pb, cpvneg(n), d, id};
+		struct ClosestPoints points;
+		points.a = pa;
+		points.b = pb;
+		points.n = cpvneg(n);
+		points.d = d;
+		points.id = id;
+
 		return points;
 	} else {
 		cpFloat d2 = cpvlength(p);
 		cpVect n = cpvmult(p, 1.0f/(d2 + CPFLOAT_MIN));
 		
-		struct ClosestPoints points = {pa, pb, n, d2, id};
+//		struct ClosestPoints points = {pa, pb, n, d2, id};
+		struct ClosestPoints points;
+		points.a = pa;
+		points.b = pb;
+		points.n = n;
+		points.d = d2;
+		points.id = id;
+
 		return points;
 	}
 }
@@ -314,7 +401,11 @@ static struct ClosestPoints
 EPA(const struct SupportContext *ctx, const struct MinkowskiPoint v0, const struct MinkowskiPoint v1, const struct MinkowskiPoint v2)
 {
 	// TODO: allocate a NxM array here and do an in place convex hull reduction in EPARecurse
-	struct MinkowskiPoint hull[3] = {v0, v1, v2};
+//	struct MinkowskiPoint hull[3] = {v0, v1, v2};
+	struct MinkowskiPoint hull[3];
+	hull[0] = v0;
+	hull[1] = v1;
+	hull[2] = v2;
 	return EPARecurse(ctx, 3, hull, 1);
 }
 
