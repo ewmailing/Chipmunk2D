@@ -1,0 +1,349 @@
+LIBRARY chipmunk
+EXPORTS
+
+	cpArbiterGetContactPointSet
+	cpArbiterGetCount
+	cpArbiterGetDepth
+	cpArbiterGetNormal
+	cpArbiterGetPointA
+	cpArbiterGetPointB
+	cpArbiterIgnore
+	cpArbiterIsFirstContact
+	cpArbiterTotalImpulse
+	cpArbiterTotalKE
+
+	cpAreaForPoly
+
+	cpBBTreeAlloc
+	cpBBTreeInit
+	cpBBTreeNew
+	cpBBTreeOptimize
+	cpBBTreeSetVelocityFunc
+
+	cpBBWrapVect
+
+	cpBodyActivate
+	cpBodyActivateStatic
+	cpBodyAlloc
+	cpBodyApplyImpulse
+	cpBodyDestroy
+	cpBodyFree
+	cpBodyGetVelAtWorldPoint
+	cpBodyInit
+	cpBodyInitStatic
+	cpBodyNew
+	cpBodyNewKinematic
+	cpBodyNewStatic
+	cpBodySanityCheck
+	cpBodySetAngle
+	cpBodySetMoment
+	cpBodySetPos
+	cpBodySleep
+	cpBodySleepWithGroup
+	cpBodyIsSleeping
+	cpBodyGetType
+	cpBodySetType
+	cpBodyGetSpace
+	cpBodyGetMass
+	cpBodySetMass
+	cpBodyGetMoment
+	cpBodySetMoment
+	cpBodyGetPosition
+	cpBodySetPosition
+	cpBodyGetCenterOfGravity
+	cpBodySetCenterOfGravity
+	cpBodyGetVelocity
+	cpBodySetVelocity
+	cpBodyGetForce
+	cpBodySetForce
+	cpBodyGetAngle
+	cpBodySetAngle
+	cpBodyGetAngularVelocity
+	cpBodySetAngularVelocity
+	cpBodyGetTorque
+	cpBodySetTorque
+	cpBodyGetRotation
+	cpBodyGetUserData
+	cpBodySetUserData
+	cpBodySetVelocityUpdateFunc
+	cpBodySetPositionUpdateFunc
+	cpBodyUpdateVelocity
+	cpBodyUpdatePosition
+	cpBodyLocalToWorld
+	cpBodyWorldToLocal
+	cpBodyApplyForceAtWorldPoint
+	cpBodyApplyForceAtLocalPoint
+	cpBodyApplyImpulseAtWorldPoint
+	cpBodyApplyImpulseAtLocalPoint
+	cpBodyGetVelocityAtWorldPoint
+	cpBodyGetVelocityAtLocalPoint
+	cpBodyKineticEnergy
+	cpBodyEachShape
+	cpBodyEachConstraint
+	cpBodyEachArbiter
+
+	cpBoxShapeInit
+	cpBoxShapeInit2
+	cpBoxShapeNew
+	cpBoxShapeNew2
+	cpPolyShapeGetCount
+	cpPolyShapeGetVert
+	cpPolyShapeGetVert
+	cpCentroidForPoly
+
+	cpCircleShapeAlloc
+	cpCircleShapeInit
+	cpCircleShapeNew
+
+	cpConstraintFree
+
+	cpConvexHull
+
+	cpDampedRotarySpringNew
+	cpDampedSpringGetClass
+	cpDampedSpringNew
+
+	cpGearJointNew
+
+	cpGrooveJointGetClass
+	cpGrooveJointNew
+
+	cpMessage
+
+	cpMomentForBox
+	cpMomentForBox2
+	cpMomentForCircle
+	cpMomentForPoly
+	cpMomentForSegment
+
+	cpPinJointGetClass
+	cpPinJointNew
+
+	cpPivotJointGetClass
+	cpPivotJointNew
+	cpPivotJointNew2
+
+	cpPolyShapeAlloc
+	cpPolyShapeGetNumVerts
+	cpPolyShapeGetVert
+	cpPolyShapeInit
+	cpPolyShapeInitRaw
+	cpPolyShapeNew
+	cpPolyShapeNewRaw
+	cpPolyShapeSetVerts
+	cpPolyValidate
+
+	cpRatchetJointNew
+
+	cpResetShapeIdCounter
+
+	cpRotaryLimitJointNew
+
+	cpSegmentShapeAlloc
+	cpSegmentShapeInit
+	cpSegmentShapeNew
+	cpSegmentShapeSetNeighbors
+
+	cpShapeCacheBB
+	cpShapeDestroy
+	cpShapeFree
+	cpShapeNearestPointQuery
+	cpShapePointQuery
+	cpShapeSegmentQuery
+	cpShapesCollide
+	cpShapeGetSpace
+	cpShapeGetBody
+	cpShapeSetBody
+	cpShapeUpdate
+	cpShapeGetMass
+	cpShapeSetMass
+	cpShapeGetDensity
+	cpShapeSetDensity
+	cpShapeGetMoment
+	cpShapeGetArea
+	cpShapeGetCenterOfGravity
+	cpShapeGetBB
+	cpShapeGetSensor
+	cpShapeSetSensor
+	cpShapeGetElasticity
+	cpShapeSetElasticity
+	cpShapeGetFriction
+	cpShapeSetFriction
+	cpShapeGetSurfaceVelocity
+	cpShapeSetSurfaceVelocity
+	cpShapeGetUserData
+	cpShapeSetUserData
+	cpShapeGetCollisionType
+	cpShapeSetCollisionType
+	cpShapeGetFilter
+	cpShapeSetFilter
+	cpCircleShapeGetOffset
+	cpCircleShapeGetRadius
+	cpSegmentShapeGetA
+	cpSegmentShapeGetB
+	cpSegmentShapeGetNormal
+	cpSegmentShapeGetRadius
+
+	cpSimpleMotorGetClass
+	cpSimpleMotorNew
+
+	cpSlideJointGetClass
+	cpSlideJointNew
+
+	cpSpaceAddBody
+	cpSpaceAddConstraint
+	cpSpaceAddPostStepCallback
+	cpSpaceAddShape
+	cpSpaceAlloc
+	cpSpaceBBQuery
+	cpSpaceContainsBody
+	cpSpaceContainsConstraint
+	cpSpaceContainsShape
+	cpSpaceDestroy
+	cpSpaceEachBody
+	cpSpaceEachConstraint
+	cpSpaceEachShape
+	cpSpaceFree
+	cpSpaceInit
+	cpSpaceNearestPointQuery
+	cpSpaceNearestPointQueryNearest
+	cpSpaceNew
+	cpSpaceGetIterations
+	cpSpaceSetIterations
+	cpSpaceGetGravity
+	cpSpaceSetGravity
+	cpSpaceGetDamping
+	cpSpaceSetDamping
+	cpSpaceGetIdleSpeedThreshold
+	cpSpaceSetIdleSpeedThreshold
+	cpSpaceGetSleepTimeThreshold
+	cpSpaceSetSleepTimeThreshold
+	cpSpaceGetCollisionSlop
+	cpSpaceSetCollisionSlop
+	cpSpaceGetCollisionBias
+	cpSpaceSetCollisionBias
+	cpSpaceGetCollisionPersistence
+	cpSpaceSetCollisionPersistence
+	cpSpaceGetUserData
+	cpSpaceSetUserData
+	cpSpaceGetStaticBody
+	cpSpaceGetCurrentTimeStep
+	cpSpaceIsLocked
+	cpSpaceAddDefaultCollisionHandler
+	cpSpaceAddCollisionHandler
+	cpSpaceAddWildcardHandler
+
+
+	cpSpacePointQuery
+	cpSpacePointQueryNearest
+	cpSpaceSegmentQuery
+	cpSpaceSegmentQueryFirst
+
+	cpSpaceDebugDraw
+
+	cpSpaceReindexShape
+	cpSpaceReindexShapesForBody
+	cpSpaceReindexStatic
+	cpSpaceRemoveBody
+	cpSpaceRemoveConstraint
+	cpSpaceRemoveShape
+	cpSpaceSegmentQuery
+	cpSpaceSegmentQueryFirst
+	cpSpaceSetDefaultCollisionHandler
+	cpSpaceShapeQuery
+	cpSpaceStep
+	cpSpaceUseSpatialHash
+
+	cpSpaceHashAlloc
+	cpSpaceHashInit
+	cpSpaceHashNew
+	cpSpaceHashResize
+
+	cpSpatialIndexCollideStatic
+	cpSpatialIndexFree
+
+	cpSweep1DAlloc
+	cpSweep1DInit
+	cpSweep1DNew
+
+	cpvslerp
+	cpvslerpconst
+	cpvstr
+
+	cpBodyResetForces
+	cpBodyApplyForce
+	cpBodyGetVelAtLocalPoint
+	cpCircleShapeGetOffset
+	cpCircleShapeGetRadius
+	cpSegmentShapeGetA
+	cpSegmentShapeGetB
+	cpSegmentShapeGetNormal
+	cpSegmentShapeGetRadius
+	cpArbiterGetSurfaceVelocity
+	cpArbiterSetSurfaceVelocity
+	cpArbiterSetContactPointSet
+	cpConstraintDestroy
+	cpPinJointAlloc
+	cpPinJointInit
+	cpSlideJointAlloc
+	cpSlideJointInit
+	cpPivotJointAlloc
+	cpPivotJointInit
+	cpGrooveJointAlloc
+	cpGrooveJointInit
+	cpGrooveJointSetGrooveA
+	cpGrooveJointSetGrooveB
+	cpDampedSpringAlloc
+	cpDampedSpringInit
+	cpDampedRotarySpringGetClass
+	cpDampedRotarySpringAlloc
+	cpDampedRotarySpringInit
+	cpRotaryLimitJointGetClass
+	cpRotaryLimitJointAlloc
+	cpRotaryLimitJointInit
+	cpRatchetJointGetClass
+	cpRatchetJointAlloc
+	cpRatchetJointInit
+	cpGearJointGetClass
+	cpGearJointAlloc
+	cpGearJointInit
+	cpGearJointSetRatio
+	cpSimpleMotorAlloc
+	cpSimpleMotorInit
+	cpAreaForCircle
+	cpAreaForSegment
+	cpVersionString
+
+	cpClosetPointOnSegment
+
+	cpArbiterGetRestitution
+	cpArbiterSetRestitution
+	cpArbiterGetFriction
+	cpArbiterSetFriction
+	cpArbiterGetUserData
+	cpArbiterSetUserData
+	cpArbiterGetShapes
+	cpArbiterGetBodies
+	cpArbiterIsRemoval
+	cpArbiterCallWildcardBeginA
+	cpArbiterCallWildcardBeginB
+	cpArbiterCallWildcardPreSolveA
+	cpArbiterCallWildcardPreSolveB
+	cpArbiterCallWildcardPostSolveA
+	cpArbiterCallWildcardPostSolveB
+	cpArbiterCallWildcardSeparateA
+	cpArbiterCallWildcardSeparateB
+
+
+
+
+
+
+	cpCircleShapeSetRadius
+	cpCircleShapeSetOffset
+	cpSegmentShapeSetEndpoints
+	cpSegmentShapeSetRadius
+	cpPolyShapeSetVerts
+	cpPolyShapeSetVertsRaw
+	cpPolyShapeSetRadius
+
