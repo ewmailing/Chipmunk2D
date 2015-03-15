@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.6)
 cmake_policy(SET CMP0001 NEW) # don't use MAKE_BACKWARDS_COMPATIBILITY but policies instead
 
 project(chipmunk)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules/" ${CMAKE_MODULE_PATH})
+include(CMakeDependentOption)
 
 # to change the prefix, run cmake with the parameter:
 #   -D CMAKE_INSTALL_PREFIX=/my/prefix
@@ -30,6 +32,22 @@ if(ANDROID)
   option(BUILD_SHARED "Build and install the shared library" ON)
   option(BUILD_STATIC "Build as static library" ON)
   option(INSTALL_STATIC "Install the static library" OFF)
+elseif(APPLE)
+  # TODO: When iOS 7 is gone, consider switching to framework
+  if(IOS)
+    option(BUILD_SHARED "Build dynamic library" OFF)
+    option(BUILD_STATIC "Build as static library" ON)
+    option(BUILD_DEMOS "Build the demo applications" OFF)
+    option(INSTALL_DEMOS "Install the demo applications" OFF)
+	option(INSTALL_STATIC "Install the static library" OFF)
+  else()
+    OPTION(BUILD_SHARED "Build dynamic library" ON)
+    CMAKE_DEPENDENT_OPTION(BUILD_FRAMEWORK "Set to ON to build framework instead of dylib. Only valid if BUILD_SHARED is ON an is OS X." ON "BUILD_SHARED" ON)
+	option(BUILD_STATIC "Build as static library" ON)
+    option(BUILD_DEMOS "Build the demo applications" ON)
+	option(INSTALL_DEMOS "Install the demo applications" OFF)
+	option(INSTALL_STATIC "Install the static library" OFF)
+  endif()
 else()
   option(BUILD_DEMOS "Build the demo applications" ON)
   option(INSTALL_DEMOS "Install the demo applications" OFF)
@@ -37,6 +55,14 @@ else()
   option(BUILD_STATIC "Build as static library" ON)
   option(INSTALL_STATIC "Install the static library" ON)
 endif()
+
+# Visual Studio's C compiler sucks, but VS2013 Update 4 makes it tolerable.
+# Compiling C as C++ can cause problems particularly with libraries and linkage.
+# It generally should be avoided when possible.
+if(MSVC)
+	option(BUILD_AS_CPP "Compile source code as C++ instead of C" OFF)
+endif(MSVC)
+
 
 if(CMAKE_C_COMPILER_ID STREQUAL "Clang")
   option(FORCE_CLANG_BLOCKS "Force enable Clang blocks" YES)

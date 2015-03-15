@@ -88,25 +88,81 @@ EXPORTS
 	cpBoxShapeNew2
 	cpPolyShapeGetCount
 	cpPolyShapeGetVert
-	cpPolyShapeGetVert
+	cpPolyShapeGetRadius
 	cpCentroidForPoly
 
 	cpCircleShapeAlloc
 	cpCircleShapeInit
 	cpCircleShapeNew
 
+	cpConstraintDestroy
 	cpConstraintFree
+	cpConstraintGetBodyA
+	cpConstraintGetBodyB
+	cpConstraintGetMaxForce
+	cpConstraintSetMaxForce
+	cpConstraintGetErrorBias
+	cpConstraintSetErrorBias
+	cpConstraintGetMaxBias
+	cpConstraintSetMaxBias
+	cpConstraintGetCollideBodies
+	cpConstraintSetCollideBodies
+	cpConstraintGetPreSolveFunc
+	cpConstraintSetPreSolveFunc
+	cpConstraintGetPostSolveFunc
+	cpConstraintSetPostSolveFunc
+	cpConstraintGetUserData
+	cpConstraintSetUserData
+	cpConstraintGetImpulse
+
 
 	cpConvexHull
 
+	cpConstraintIsDampedRotarySpring
 	cpDampedRotarySpringNew
-	cpDampedSpringGetClass
-	cpDampedSpringNew
+	cpDampedRotarySpringGetRestAngle
+	cpDampedRotarySpringSetRestAngle
+	cpDampedRotarySpringGetStiffness
+	cpDampedRotarySpringSetStiffness
+	cpDampedRotarySpringGetDamping
+	cpDampedRotarySpringSetDamping
+	cpDampedRotarySpringGetSpringTorqueFunc
+	cpDampedRotarySpringSetSpringTorqueFunc
 
+	cpDampedSpringGetClass
+
+	cpConstraintIsDampedSpring
+	cpDampedSpringNew
+	cpDampedSpringGetAnchorA
+	cpDampedSpringSetAnchorA
+	cpDampedSpringGetAnchorB
+	cpDampedSpringSetAnchorB
+	cpDampedSpringGetRestLength
+	cpDampedSpringSetRestLength
+	cpDampedSpringGetStiffness
+	cpDampedSpringSetStiffness
+	cpDampedSpringGetDamping
+	cpDampedSpringSetDamping
+	cpDampedSpringGetSpringForceFunc
+	cpDampedSpringSetSpringForceFunc
+
+	cpConstraintIsGearJoint
 	cpGearJointNew
+	cpGearJointGetPhase
+	cpGearJointSetPhase
+	cpGearJointGetRatio
+	cpGearJointSetRatio
 
 	cpGrooveJointGetClass
+	cpConstraintIsGrooveJoint
 	cpGrooveJointNew
+	cpGrooveJointGetGrooveA
+	cpGrooveJointSetGrooveA
+	cpGrooveJointGetGrooveB
+	cpGrooveJointSetGrooveB
+	cpGrooveJointGetAnchorB
+	cpGrooveJointSetAnchorB
+
 
 	cpMessage
 
@@ -117,11 +173,24 @@ EXPORTS
 	cpMomentForSegment
 
 	cpPinJointGetClass
+	cpConstraintIsPinJoint
 	cpPinJointNew
+	cpPinJointGetAnchorA
+	cpPinJointSetAnchorA
+	cpPinJointGetAnchorB
+	cpPinJointSetAnchorB
+	cpPinJointGetDist
+	cpPinJointSetDist
 
 	cpPivotJointGetClass
+	cpConstraintIsPivotJoint
 	cpPivotJointNew
 	cpPivotJointNew2
+	cpPivotJointGetAnchorA
+	cpPivotJointSetAnchorA
+	cpPivotJointGetAnchorB
+	cpPivotJointSetAnchorB
+
 
 	cpPolyShapeAlloc
 	cpPolyShapeGetNumVerts
@@ -133,11 +202,24 @@ EXPORTS
 	cpPolyShapeSetVerts
 	cpPolyValidate
 
+	cpConstraintIsRatchetJoint
 	cpRatchetJointNew
+	cpRatchetJointGetAngle
+	cpRatchetJointSetAngle
+	cpRatchetJointGetPhase
+	cpRatchetJointSetPhase
+	cpRatchetJointGetRatchet
+	cpRatchetJointSetRatchet
+
 
 	cpResetShapeIdCounter
 
+	cpConstraintIsRotaryLimitJoint
 	cpRotaryLimitJointNew
+	cpRotaryLimitJointGetMin
+	cpRotaryLimitJointSetMin
+	cpRotaryLimitJointGetMax
+	cpRotaryLimitJointSetMax
 
 	cpSegmentShapeAlloc
 	cpSegmentShapeInit
@@ -185,10 +267,23 @@ EXPORTS
 	cpSegmentShapeGetRadius
 
 	cpSimpleMotorGetClass
+	cpConstraintIsSimpleMotor
 	cpSimpleMotorNew
+	cpSimpleMotorGetRate
+	cpSimpleMotorSetRate
 
 	cpSlideJointGetClass
+	cpConstraintIsSlideJoint
 	cpSlideJointNew
+	cpSlideJointGetAnchorA
+	cpSlideJointSetAnchorA
+	cpSlideJointGetAnchorB
+	cpSlideJointSetAnchorB
+	cpSlideJointGetMin
+	cpSlideJointSetMin
+	cpSlideJointGetMax
+	cpSlideJointSetMax
+
 
 	cpSpaceAddBody
 	cpSpaceAddConstraint
@@ -266,9 +361,6 @@ EXPORTS
 	cpSweep1DInit
 	cpSweep1DNew
 
-	cpvslerp
-	cpvslerpconst
-	cpvstr
 
 	cpBodyResetForces
 	cpBodyApplyForce
@@ -282,7 +374,6 @@ EXPORTS
 	cpArbiterGetSurfaceVelocity
 	cpArbiterSetSurfaceVelocity
 	cpArbiterSetContactPointSet
-	cpConstraintDestroy
 	cpPinJointAlloc
 	cpPinJointInit
 	cpSlideJointAlloc
@@ -335,8 +426,19 @@ EXPORTS
 	cpArbiterCallWildcardSeparateB
 
 
-
-
+	cpPolylineFree
+	cpPolylineIsClosed
+	cpPolylineSimplifyCurves
+	cpPolylineSimplifyVertexes
+	cpPolylineToConvexHull
+	cpPolylineSetAlloc
+	cpPolylineSetInit
+	cpPolylineSetNew
+	cpPolylineSetDestroy
+	cpPolylineSetFree
+	cpPolylineSetCollectSegment
+	cpPolylineConvexDecomposition
+	cpPolylineConvexDecomposition_BETA
 
 
 	cpCircleShapeSetRadius
