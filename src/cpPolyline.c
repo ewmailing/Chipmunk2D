@@ -561,7 +561,8 @@ FindSteiner(int count, cpVect *verts, struct Notch notch)
 static struct Notch
 DeepestNotch(int count, cpVect *verts, int hullCount, cpVect *hullVerts, int first, cpFloat tol)
 {
-	struct Notch notch = {};
+	// Visual Studio 2013 Update 4 can't handle struct Notch notch = {};
+	struct Notch notch = { 0, 0.0, { 0.0, 0.0 }, { 0.0, 0.0 } };
 	int j = Next(first, count);
 	
 	for(int i=0; i<hullCount; i++){

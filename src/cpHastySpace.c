@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <pthread.h>
 //#include <sys/param.h >
 #ifdef __APPLE__
 #include <sys/sysctl.h>
@@ -12,6 +11,14 @@
 
 #include "chipmunk/chipmunk_private.h"
 #include "chipmunk/cpHastySpace.h"
+
+#ifdef _WIN32
+// compatibility shim from Lockless Inc
+// This should be included last to avoid contamination because it #defines functions with common names like 'remove'
+#include "winpthreads.h"
+#else
+#include <pthread.h>
+#endif
 
 
 //MARK: ARM NEON Solver

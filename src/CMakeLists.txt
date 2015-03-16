@@ -18,14 +18,17 @@ if(BUILD_SHARED)
   # which point to directories outside the build tree to the install RPATH
   set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)	
 
+  if(MSVC)
+    # Windows dll's must explicitly export symbols. This information is not embedded in headers, so we need a .def file.
+    list(APPEND chipmunk_source_files "${CMAKE_SOURCE_DIR}/msvc/vc13/chipmunk/chipmunk.def")
+    add_definitions(-DCRT_SECURE_NO_WARNINGS)
+  endif(MSVC)
+  
   add_library(chipmunk SHARED
     ${chipmunk_source_files}
     ${chipmunk_public_header}
   )
-  if(MSVC)
-    # Windows dll's must explicitly export symbols. This information is not embedded in headers, so we need a .def file.
-	list(APPEND ${chipmunk_source_files} "${chipmunk_SOURCE_DIR}/msvc/vc13/chipmunk/chipmunk.def")
-  endif(MSVC)
+
   # Legacy option for MSVC to compile the code as C++.
   if(BUILD_AS_CPP)
     set_source_files_properties(${chipmunk_source_files} PROPERTIES LANGUAGE CXX)

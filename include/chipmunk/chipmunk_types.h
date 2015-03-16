@@ -26,6 +26,11 @@
 #include <float.h>
 #include <math.h>
 
+// Visual Studio 2013 Update 4 is still broken with C99 inline
+#ifdef _MSC_VER
+#define inline __inline
+#endif
+
 #ifdef __APPLE__
    #include "TargetConditionals.h"
 #endif

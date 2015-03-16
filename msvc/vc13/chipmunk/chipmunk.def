@@ -20,24 +20,23 @@ EXPORTS
 	cpBBTreeOptimize
 	cpBBTreeSetVelocityFunc
 
-	cpBBWrapVect
 
 	cpBodyActivate
 	cpBodyActivateStatic
 	cpBodyAlloc
-	cpBodyApplyImpulse
+
 	cpBodyDestroy
 	cpBodyFree
-	cpBodyGetVelAtWorldPoint
+
 	cpBodyInit
-	cpBodyInitStatic
+
 	cpBodyNew
 	cpBodyNewKinematic
 	cpBodyNewStatic
-	cpBodySanityCheck
+
 	cpBodySetAngle
 	cpBodySetMoment
-	cpBodySetPos
+
 	cpBodySleep
 	cpBodySleepWithGroup
 	cpBodyIsSleeping
@@ -97,6 +96,7 @@ EXPORTS
 
 	cpConstraintDestroy
 	cpConstraintFree
+	cpConstraintGetSpace
 	cpConstraintGetBodyA
 	cpConstraintGetBodyB
 	cpConstraintGetMaxForce
@@ -129,8 +129,8 @@ EXPORTS
 	cpDampedRotarySpringGetSpringTorqueFunc
 	cpDampedRotarySpringSetSpringTorqueFunc
 
-	cpDampedSpringGetClass
 
+	
 	cpConstraintIsDampedSpring
 	cpDampedSpringNew
 	cpDampedSpringGetAnchorA
@@ -153,7 +153,7 @@ EXPORTS
 	cpGearJointGetRatio
 	cpGearJointSetRatio
 
-	cpGrooveJointGetClass
+
 	cpConstraintIsGrooveJoint
 	cpGrooveJointNew
 	cpGrooveJointGetGrooveA
@@ -172,7 +172,7 @@ EXPORTS
 	cpMomentForPoly
 	cpMomentForSegment
 
-	cpPinJointGetClass
+
 	cpConstraintIsPinJoint
 	cpPinJointNew
 	cpPinJointGetAnchorA
@@ -182,7 +182,7 @@ EXPORTS
 	cpPinJointGetDist
 	cpPinJointSetDist
 
-	cpPivotJointGetClass
+
 	cpConstraintIsPivotJoint
 	cpPivotJointNew
 	cpPivotJointNew2
@@ -193,15 +193,15 @@ EXPORTS
 
 
 	cpPolyShapeAlloc
-	cpPolyShapeGetNumVerts
+
 	cpPolyShapeGetVert
 	cpPolyShapeInit
 	cpPolyShapeInitRaw
 	cpPolyShapeNew
-	cpPolyShapeNewRaw
-	cpPolyShapeSetVerts
-	cpPolyValidate
 
+	cpPolyShapeSetVerts
+
+	
 	cpConstraintIsRatchetJoint
 	cpRatchetJointNew
 	cpRatchetJointGetAngle
@@ -212,8 +212,8 @@ EXPORTS
 	cpRatchetJointSetRatchet
 
 
-	cpResetShapeIdCounter
 
+	
 	cpConstraintIsRotaryLimitJoint
 	cpRotaryLimitJointNew
 	cpRotaryLimitJointGetMin
@@ -229,7 +229,7 @@ EXPORTS
 	cpShapeCacheBB
 	cpShapeDestroy
 	cpShapeFree
-	cpShapeNearestPointQuery
+
 	cpShapePointQuery
 	cpShapeSegmentQuery
 	cpShapesCollide
@@ -266,13 +266,13 @@ EXPORTS
 	cpSegmentShapeGetNormal
 	cpSegmentShapeGetRadius
 
-	cpSimpleMotorGetClass
+
 	cpConstraintIsSimpleMotor
 	cpSimpleMotorNew
 	cpSimpleMotorGetRate
 	cpSimpleMotorSetRate
 
-	cpSlideJointGetClass
+
 	cpConstraintIsSlideJoint
 	cpSlideJointNew
 	cpSlideJointGetAnchorA
@@ -300,8 +300,8 @@ EXPORTS
 	cpSpaceEachShape
 	cpSpaceFree
 	cpSpaceInit
-	cpSpaceNearestPointQuery
-	cpSpaceNearestPointQueryNearest
+
+
 	cpSpaceNew
 	cpSpaceGetIterations
 	cpSpaceSetIterations
@@ -344,7 +344,7 @@ EXPORTS
 	cpSpaceRemoveShape
 	cpSpaceSegmentQuery
 	cpSpaceSegmentQueryFirst
-	cpSpaceSetDefaultCollisionHandler
+
 	cpSpaceShapeQuery
 	cpSpaceStep
 	cpSpaceUseSpatialHash
@@ -362,9 +362,9 @@ EXPORTS
 	cpSweep1DNew
 
 
-	cpBodyResetForces
-	cpBodyApplyForce
-	cpBodyGetVelAtLocalPoint
+
+	
+
 	cpCircleShapeGetOffset
 	cpCircleShapeGetRadius
 	cpSegmentShapeGetA
@@ -386,16 +386,16 @@ EXPORTS
 	cpGrooveJointSetGrooveB
 	cpDampedSpringAlloc
 	cpDampedSpringInit
-	cpDampedRotarySpringGetClass
+
 	cpDampedRotarySpringAlloc
 	cpDampedRotarySpringInit
-	cpRotaryLimitJointGetClass
+
 	cpRotaryLimitJointAlloc
 	cpRotaryLimitJointInit
-	cpRatchetJointGetClass
+
 	cpRatchetJointAlloc
 	cpRatchetJointInit
-	cpGearJointGetClass
+
 	cpGearJointAlloc
 	cpGearJointInit
 	cpGearJointSetRatio
@@ -405,8 +405,8 @@ EXPORTS
 	cpAreaForSegment
 	cpVersionString
 
-	cpClosetPointOnSegment
 
+	
 	cpArbiterGetRestitution
 	cpArbiterSetRestitution
 	cpArbiterGetFriction
@@ -438,8 +438,15 @@ EXPORTS
 	cpPolylineSetFree
 	cpPolylineSetCollectSegment
 	cpPolylineConvexDecomposition
-	cpPolylineConvexDecomposition_BETA
 
+	cpHastySpaceNew
+	cpHastySpaceFree
+	cpHastySpaceSetThreads
+	cpHastySpaceGetThreads
+	cpHastySpaceStep
+
+	cpMarchSoft
+	cpMarchHard
 
 	cpCircleShapeSetRadius
 	cpCircleShapeSetOffset
