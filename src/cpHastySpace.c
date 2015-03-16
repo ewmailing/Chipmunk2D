@@ -6,7 +6,9 @@
 
 #include <pthread.h>
 //#include <sys/param.h >
+#ifdef __APPLE__
 #include <sys/sysctl.h>
+#endif
 
 #include "chipmunk/chipmunk_private.h"
 #include "chipmunk/cpHastySpace.h"
