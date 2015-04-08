@@ -39,7 +39,10 @@ if(BUILD_SHARED)
   if(NOT ANDROID)
     set_target_properties(chipmunk PROPERTIES
       SOVERSION ${CHIPMUNK_VERSION_MAJOR}
-      VERSION ${CHIPMUNK_VERSION})
+# Blurrr HOTFIX: The soname is written as libchipmunk.so.7, but CMake makes this a symlink to libchipmunk.so.7.0.0 for the real binary which screws up analysis when looking at the ldd/objdump.
+# The easiest fix is to make them the same or disable versioing all together.
+	  # VERSION ${CHIPMUNK_VERSION})
+      VERSION ${CHIPMUNK_VERSION_MAJOR})
   endif(NOT ANDROID)
   if(ANDROID OR UNIX)
 	  # need to explicitly link to the math library because the CMake/Android toolchains may not do it automatically
