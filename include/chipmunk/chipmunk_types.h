@@ -58,8 +58,17 @@
 #endif
 
 #ifndef CP_USE_DOUBLES
-	// Use doubles by default for higher precision.
-	#define CP_USE_DOUBLES 1
+	// EW: Extending logic to decide doubles to allow for NEON on Raspberry Pi (and probably Android 32-bit)
+	#if __ARM_NEON__
+		#if __arm64
+			#define CP_USE_DOUBLES 1
+		#else
+			#define CP_USE_DOUBLES 0
+		#endif
+	#else
+		// Use doubles by default for higher precision.
+		#define CP_USE_DOUBLES 1
+	#endif
 #endif
 
 /// @defgroup basicTypes Basic Types
