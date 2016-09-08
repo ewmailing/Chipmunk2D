@@ -87,6 +87,18 @@ if(NOT MSVC)
   set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall") # extend debug-profile with -Wall
 endif()
 
+
+# A bug report from Arch Linux + gcc 6 is getting unresolved symbol problems on libpthread.
+if(UNIX AND NOT APPLE AND NOT ANDROID)
+	set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+	set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+	find_package(Threads REQUIRED)
+	if(CMAKE_USE_PTHREADS_INIT)
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
+	endif()
+	set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
+endif()
+
 add_subdirectory(src)
 
 if(BUILD_DEMOS)
