@@ -31,7 +31,15 @@ if(BUILD_SHARED)
     if(NEON OR VFPV3 OR ARMEABI_V7A)
 	    add_definitions(-D__ARM_NEON__)
     endif()
-  endif(ANDROID)
+
+  # For Raspberry Pi
+  elseif(("${CMAKE_SYSTEM_NAME}" MATCHES "Linux") AND ("${CMAKE_SYSTEM_PROCESSOR}" MATCHES "arm"))
+	  # TODO: I'm assuming Raspbian Jessie (gcc >= 4.8) and NEON for Pi2
+      # Need better way to detect this.
+      add_definitions(-D__ARM_NEON__)
+      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard")
+
+  endif()
   
   add_library(chipmunk SHARED
     ${chipmunk_source_files}
