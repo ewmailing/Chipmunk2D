@@ -59,12 +59,14 @@
 
 #ifndef CP_USE_DOUBLES
 	// EW: Extending logic to decide doubles to allow for NEON on Raspberry Pi (and probably Android 32-bit)
-	#if __ARM_NEON__
-		#if __arm64
+	#if defined(__ARM_NEON__)
+		#if defined(__arm64) || defined(__arm64__)
 			#define CP_USE_DOUBLES 1
 		#else
 			#define CP_USE_DOUBLES 0
 		#endif
+	#elif defined(__arm__) || defined(__i386__) || defined(_M_IX86)
+		#define CP_USE_DOUBLES 0
 	#else
 		// Use doubles by default for higher precision.
 		#define CP_USE_DOUBLES 1

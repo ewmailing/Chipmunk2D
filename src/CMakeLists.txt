@@ -23,6 +23,15 @@ if(BUILD_SHARED)
     list(APPEND chipmunk_source_files "${CMAKE_SOURCE_DIR}/msvc/vc13/chipmunk/chipmunk.def")
     add_definitions(-DCRT_SECURE_NO_WARNINGS)
   endif(MSVC)
+
+  if(ANDROID)
+    # At this point in time, all Android ARMv7 devices ship with NEON.
+    # Android doesn't automatically set any #defines for us because they wanted us to do a runtime check.
+    # This is pointless now, so just turn it on.
+    if(NEON OR VFPV3 OR ARMEABI_V7A)
+	    add_definitions(-D__ARM_NEON__)
+    endif()
+  endif(ANDROID)
   
   add_library(chipmunk SHARED
     ${chipmunk_source_files}
